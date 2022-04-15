@@ -30,8 +30,31 @@
         ay: 0,
         maxVel: 40
       };
+
+      class xBoostItem {
+        constructor(x, y) {
+          this.name = "xBoost";
+          this.x = x;
+          this.y = y;
+          this.width = 60;
+          this.height = 20;
+          this.color = "purple";
+        }
+      }
+
+      var bounceItem = {
+        name: "fullBounce",
+        x: 0,
+        y: 0,
+        width: 20,
+        height: 20,
+        color: "pink"
+      }
+
       var dt = 0.5;
       var groundObjPos = [0, canvas.width, canvas.width*2];
+      var items = [];
+      var gameStarted = false;
 
       function drawPlayer() {
         ctx.beginPath();
@@ -65,8 +88,13 @@
             ctx.translate(PLAYER_START_X - player.x, 0);
           }
         } else {
-          player.vy = 0;
-          endGame();
+          if(player.bounceType === 1) {
+            player.vy = -player.vy;
+            player.bounceType = 0;
+          } else {
+            player.vy = 0;
+            endGame();
+          }
         }
       }
       function flap() {
@@ -78,10 +106,40 @@
           player.vx += 2;
       }
 
+      // powerups
+      function giveBounce() {
+        player.bounceType = 1;
+      }
+
+      function giveBoost() {
+        player.vx += 25;
+      }
+
+      function giveLastChance() {
+        console.log('Does nothing right now');
+      }
+
+      function drawItems(canvasX) {
+        console.log(items);
+        // remove oldest off-screen item
+        if(items.length > 0 && items[0].width + items[0].x < canvasX) {
+          items.shift();
+        }
+        for(const item of items) {
+          // TODO: check collision with player
+
+          // draw item
+          ctx.beginPath();
+          ctx.rect(item.x, item.y, item.width, item.height);
+          ctx.fillStyle = item.color;
+          ctx.fill();
+          ctx.closePath();
+        }
+      }
+
       function drawGround(canvasX) {
-        console.log(groundObjPos[0]);
         if(groundObjPos[0] + canvas.width < canvasX) {
-          groundObjPos.shift()
+          groundObjPos.shift();
           groundObjPos.push(groundObjPos[groundObjPos.length - 1] + canvas.width);
         }
         for(const gPos of groundObjPos) {
@@ -104,7 +162,7 @@
       function drawHorizontalMarkers(canvasX) {
         let distanceBetweenMarkers = canvas.width / 2;
         for(let i=1; i < 50; ++i) {
-          let markerPos = canvas.height - i*distanceBetweenMarkers
+          let markerPos = canvas.height - i*distanceBetweenMarkers;
           let vGameDistance = 5*i;
           if(Math.abs(player.y - markerPos) < canvas.height) {
             ctx.beginPath();
@@ -120,21 +178,13 @@
 
       function startGame() {
         player.vx = 10;
-        player.ax = 0.12;
+        player.ax = 0.18;
         player.vy = -10;
         player.ay = 1;
+
+        gameStarted = true;
       }
 
-      var player = {
-        size: 20,
-        x: PLAYER_START_X,
-        vx: 0,
-        ax: 0,
-        y: PLAYER_START_Y,
-        vy: 0,
-        ay: 0,
-        maxVel: 40
-      };
       function endGame() {
         alert("Game over!");
         player.x = PLAYER_START_X;
@@ -143,6 +193,9 @@
         player.y = PLAYER_START_Y;
         player.vy = 0;
         player.ay = 0;
+
+        gameStarted = false;
+        items = [];
         groundObjPos = [0, canvas.width, canvas.width*2];
       }
 
@@ -151,14 +204,37 @@
         var canvasX = player.x - PLAYER_START_X;
         var canvasY = player.y - PLAYER_START_Y;
 
+        if(gameStarted) {
+          p = getRandomInt(0,100);
+          if(p < 1) {
+            itemX = canvasX + canvas.width;
+            items.push(new xBoostItem(itemX, canvas.height / 2));
+          }
+        }
+
         ctx.clearRect(canvasX, canvasY - canvas.height, canvas.width, canvas.height*2);
         drawGround(canvasX);
         drawDebug(canvasX);
+        drawItems(canvasX);
         drawPlayer();
-        requestAnimationFrame(run)
+        requestAnimationFrame(run);
       }
       run();
-      document.addEventListener("keydown", function(e){ e.keyCode == 32 && flap() })
+      document.addEventListener("keydown", function(e){ e.keyCode == 32 && flap() });
+      document.addEventListener("keydown", function(e) {
+        if(e.keyCode == 65) { giveBounce(); } // bounce
+        else if(e.keyCode == 83) { giveBoost(); } // xboost
+        else if(e.keyCode == 68) { giveBoost(); } // yboost
+        else if(e.keyCode == 70) { giveLastChance(); } // last chance save
+      });
+
+      // helper functions
+      function getRandomInt(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min) + min);
+      }
+
     </script>
   </body>
 </html>
