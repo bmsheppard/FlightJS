@@ -45,7 +45,7 @@ function run() {
 
   if(gameStarted) {
     //TODO: change p range dynamically
-    let p = getRandomInt(0,100);
+    let p = getRandomInt(0, 80 + 500/player.vx);
     let itemX = canvasX + canvas.width;
     let itemMaxY = Math.max(canvasY - canvas.height*2, MAX_ITEM_HEIGHT_Y);
     let itemMinY = Math.min(canvasY + canvas.height*2, GROUND_POS_Y - 100);

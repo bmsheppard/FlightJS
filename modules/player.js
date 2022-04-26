@@ -7,7 +7,7 @@ class Player {
     this.y = y;
     this.vy = 0;
     this.ay = 0;
-    this.maxVel = 40;
+    this.maxVelY = 40;
     this.lost = false;
     this.dt = 0.5;
   }
@@ -36,7 +36,7 @@ class Player {
     ctx.translate(-this.vx, 0);
 
     // get new y pos
-    if(this.vy !== this.maxVel) {
+    if(this.vy !== this.maxVelY) {
       this.vy += this.ay * this.dt;
     }
     if(this.y < canvas.height - this.size || this.vy < 0) {
@@ -78,7 +78,7 @@ class Player {
       return
     }
     this.vy = -15;
-    this.vx += 0.1;
+    this.vx += 2;
   }
 
   // powerups
@@ -97,7 +97,7 @@ class Player {
   }
 
   giveBoost() {
-    this.vx += 10;
+    this.vx += 20;
   }
 
   giveLastChance() {
