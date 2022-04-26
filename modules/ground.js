@@ -1,6 +1,8 @@
 class Ground {
-  constructor(canvasWidth) {
+  constructor(canvasWidth, y) {
     this.groundObjs = [0, canvasWidth, canvasWidth * 2];
+    this.y = y;
+    this.heigth = 50;
     this.canvas = document.getElementById("gameWindow");
   }
 
@@ -16,7 +18,7 @@ class Ground {
       ctx.rect(gPos, this.canvas.height - 20, this.canvas.width, 50);
       ctx.rect(gPos, this.canvas.height - 40, 10, 60);
       ctx.font = "20px Roboto";
-      ctx.fillStyle = "blue";
+      ctx.fillStyle = "#4A5899";
       ctx.fillText(hGameDistance + "m", gPos, this.canvas.height - 50);
       ctx.fill();
       ctx.closePath();
@@ -31,7 +33,7 @@ class Ground {
       if(Math.abs(playerPosY - markerPos) < this.canvas.height) {
         ctx.beginPath();
         ctx.rect(canvasX, markerPos, this.canvas.width, 2);
-        ctx.fillStyle = "green";
+        ctx.fillStyle = "#090809";
         ctx.font = "20px Roboto";
         ctx.fillText(vGameDistance + "m", canvasX, markerPos - 2);
         ctx.fill();

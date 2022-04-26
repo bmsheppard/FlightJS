@@ -5,18 +5,29 @@ class xBoostItem {
     this.y = y;
     this.width = 80;
     this.height = 20;
-    this.color = "orange";
+    this.color = "#8AC926";
   }
 }
 
-class bounceItem {
+class fullBounceItem {
   constructor(x, y) {
     this.name = "fullBounce";
-    this.x = 0;
-    this.y = 0;
-    this.width = 20;
-    this.height = 20;
-    this.color = "pink";
+    this.x = x;
+    this.y = y;
+    this.width = 40;
+    this.height = 40;
+    this.color = "#FCF300";
+  }
+}
+
+class halfBounceItem {
+  constructor(x, y) {
+    this.name = "halfBounce";
+    this.x = x;
+    this.y = y;
+    this.width = 40;
+    this.height = 40;
+    this.color = "#F9627D";
   }
 }
 
@@ -46,7 +57,7 @@ class Items {
           touchedItem = item.name;
           item.x = canvasX - item.width;
       }
-      
+
       // draw item
       ctx.beginPath();
       ctx.rect(item.x, item.y, item.width, item.height);
@@ -60,4 +71,4 @@ class Items {
 
 
 
-export { Items, xBoostItem, bounceItem };
+export { Items, xBoostItem, fullBounceItem, halfBounceItem };

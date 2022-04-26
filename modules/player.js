@@ -21,7 +21,7 @@ class Player {
     ctx.beginPath();
     // x, y, radius, start angle, end angle,
     ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-    ctx.fillStyle = "red";
+    ctx.fillStyle = "#FF9505";
     ctx.fill();
     ctx.closePath();
     ctx.restore();
@@ -49,8 +49,8 @@ class Player {
         ctx.translate(playerStartX - this.x, 0);
       }
     } else {
-      if(this.bounceType === 1) {
-        this.vy = -this.vy;
+      if(this.bounceType !== 0) {
+        this.vy = -this.bounceType * this.vy;
         this.bounceType = 0;
       } else {
         this.vy = 0;
@@ -78,7 +78,7 @@ class Player {
       return
     }
     this.vy = -15;
-    this.vx += 2;
+    this.vx += 0.1;
   }
 
   // powerups
@@ -86,12 +86,14 @@ class Player {
     if(itemName === "xBoost") {
       this.giveBoost();
     } else if(itemName === "fullBounce") {
-      this.giveBounce();
+      this.giveBounce(1.5);
+    } else if(itemName === "halfBounce") {
+      this.giveBounce(0.75);
     }
   }
 
-  giveBounce() {
-    this.bounceType = 1;
+  giveBounce(bounceType) {
+    this.bounceType = bounceType;
   }
 
   giveBoost() {
