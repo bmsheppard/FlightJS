@@ -36,6 +36,7 @@ function endGame() {
   gameStarted = false;
   items.items = [];
   ground.groundObjs = [0, canvas.width, canvas.width*2];
+  background.resetClouds();
 }
 
 function run() {

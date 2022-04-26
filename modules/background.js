@@ -13,6 +13,13 @@ class Background {
     this.clouds.push(cloud);
   }
 
+  resetClouds() {
+    this.clouds[0].x = getRandomInt(10, this.clouds[0].width);
+    for(let i = 1; i < this.clouds.length; ++i) {
+      this.clouds[i].x = this.clouds[i-1].x + getRandomInt(this.clouds[i-1].width + 100, this.clouds[i-1].width + 600);
+    }
+  }
+
   draw(canvasX, cameraSpeedX, cameraSpeedY) {
     var canvas = document.getElementById("gameWindow");
     var ctx = canvas.getContext("2d");
@@ -27,16 +34,17 @@ class Background {
     }
     if(this.clouds.length != 0 &&
       this.clouds[0].x < canvasX - this.clouds[0].width) {
-        this.addCloud(canvasX + canvas.width, canvas.height,
-        this.clouds[0].y - this.clouds[0].startY);
+        let newPosX = getRandomInt(canvas.width, canvas.width + 100);
+        this.addCloud(canvasX + newPosX, canvas.height,
+          this.clouds[0].y - this.clouds[0].startY);
         this.clouds.shift();
     }
   }
 }
 class Cloud {
   constructor(x, y, width, height) {
-    this.x = x;
     this.startY = y;
+    this.x = x;
     this.y = y;
     this.width = width;
     this.height = height;

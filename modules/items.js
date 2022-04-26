@@ -37,7 +37,6 @@ class Items {
   }
 
   drawItems(canvasX, playerPosX, playerPosY) {
-    console.log(this.items.length);
     var touchedItem = "";
     var ctx = document.getElementById("gameWindow").getContext("2d");
     // remove oldest off-screen item
