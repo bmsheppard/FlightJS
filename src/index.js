@@ -64,11 +64,7 @@ function run() {
 
   ctx.clearRect(canvasX, canvasY - canvas.height, canvas.width, canvas.height*2);
   ground.draw(canvasX);
-  if(player.y >= canvas.height / 2) {
-    background.draw(canvasX, player.vx, 0);
-  } else {
-    background.draw(canvasX, player.vx, player.vy);
-  }
+  player.y >= canvas.height / 2 ? background.draw(canvasX, player.vx, 0) : background.draw(canvasX, player.vx, player.vy);
   drawDebug(canvasX);
   let touchedItem = items.drawItems(canvasX, player.x, player.y);
   if(touchedItem !== "") {

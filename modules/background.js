@@ -23,6 +23,8 @@ class Background {
   draw(canvasX, cameraSpeedX, cameraSpeedY) {
     var canvas = document.getElementById("gameWindow");
     var ctx = canvas.getContext("2d");
+    ctx.save();
+    ctx.globalAlpha = 0.8;
     for(let cloud of this.clouds) {
       cloud.x = cloud.x + cameraSpeedX*0.8;
       cloud.y = cloud.y + cameraSpeedY*0.2;
@@ -32,6 +34,7 @@ class Background {
       ctx.fill();
       ctx.closePath();
     }
+    ctx.restore();
     if(this.clouds.length != 0 &&
       this.clouds[0].x < canvasX - this.clouds[0].width) {
         let newPosX = getRandomInt(canvas.width, canvas.width + 100);
