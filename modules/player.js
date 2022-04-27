@@ -1,6 +1,6 @@
 const ENERGY_Y_POS = 20;
 const ENERGY_X_POS = 196;
-const ENERGY_PER_FLAP = 55;
+const ENERGY_PER_FLAP = 30;
 
 class Player {
   constructor(x, y) {
@@ -14,10 +14,13 @@ class Player {
     this.maxVelY = 40;
     this.lost = false;
     this.dt = 0.5;
+    this.bounceType = 0;
     this.energyY = ENERGY_Y_POS;
     this.energyX = ENERGY_X_POS;
-    this.drawEnergy = this.drawEnergy.bind(this);
     this.color = "#FF9505";
+    this.drawEnergy = this.drawEnergy.bind(this);
+    this.shouldSkip = this.shouldSkip.bind(this);
+    this.giveLastChance = this.giveLastChance.bind(this);
   }
 
   draw() {
@@ -65,7 +68,10 @@ class Player {
         this.vy = -this.bounceType * this.vy;
         this.bounceType = 0;
         this.color = "#FF9505";
+      } else if(this.shouldSkip()){
+        this.vy = -1 * Math.abs(this.vy);
       } else {
+        console.log(Math.atan(this.vy / this.vx));
         this.vy = 0;
         this.lost = true;
       }
@@ -111,6 +117,11 @@ class Player {
     ctx.closePath();
   }
 
+  shouldSkip() {
+    // approx 30 degrees
+    return Math.atan(this.vy / this.vx) < 0.52;
+  }
+
   reset(x, y) {
     this.x = x;
     this.vx = 0;
@@ -119,6 +130,7 @@ class Player {
     this.vy = 0;
     this.ay = 0;
     this.lost = false;
+    this.energyX = ENERGY_X_POS;
   }
 
   flap() {
@@ -132,7 +144,7 @@ class Player {
     }
     if(this.energyX >= ENERGY_PER_FLAP) {
       this.energyX = Math.max(this.energyX - ENERGY_PER_FLAP, 0);
-      this.vy = -15;
+      this.vy -= 15;
       this.vx += 2;
     }
   }
@@ -147,6 +159,13 @@ class Player {
     } else if(itemName === "halfBounce") {
       this.giveBounce(0.75);
       this.color = "#F9627D";
+    } else if(itemName === "fullEnergy") {
+      this.energyX = ENERGY_X_POS;
+    } else if(itemName == "yBoost") {
+      this.vy -= 5;
+      this.vx = Math.max(this.vx, 5);
+    } else if(itemName == "lastChance") {
+      this.giveLastChance();
     }
   }
 
@@ -159,7 +178,8 @@ class Player {
   }
 
   giveLastChance() {
-    console.log('Does nothing right now');
+    this.vx = 30;
+    this.vy = -35;
   }
 };
 

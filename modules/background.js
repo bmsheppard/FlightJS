@@ -24,6 +24,7 @@ class Background {
     var canvas = document.getElementById("gameWindow");
     var ctx = canvas.getContext("2d");
     ctx.save();
+    ctx.globalCompositeOperation = "destination-over";
     ctx.globalAlpha = 0.8;
     for(let cloud of this.clouds) {
       cloud.x = cloud.x + cameraSpeedX*0.8;

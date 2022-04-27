@@ -9,6 +9,17 @@ class xBoostItem {
   }
 }
 
+class yBoostItem {
+  constructor(x, y) {
+    this.name = "yBoost";
+    this.x = x;
+    this.y = y - 100;
+    this.width = 40;
+    this.height = 120;
+    this.color = "#CDE7B0";
+  }
+}
+
 class fullBounceItem {
   constructor(x, y) {
     this.name = "fullBounce";
@@ -31,9 +42,32 @@ class halfBounceItem {
   }
 }
 
+class fullEnergyItem {
+  constructor(x, y) {
+    this.name = "fullEnergy";
+    this.x = x;
+    this.y = y;
+    this.width = 40;
+    this.height = 40;
+    this.color = "#E39EC1";
+  }
+}
+
+class lastChanceItem {
+  constructor(x, y) {
+    this.name = "lastChance";
+    this.x = x;
+    this.y = y - 40;
+    this.width = 80;
+    this.height = 40;
+    this.color = "#FFBA08";
+  }
+}
+
 class Items {
   constructor() {
     this.items = [];
+    this.notSpecialItem = this.notSpecialItem.bind(this);
   }
 
   drawItems(canvasX, playerPosX, playerPosY) {
@@ -55,7 +89,7 @@ class Items {
       if(playerPosX < maxX && playerPosX > minX
         && playerPosY < maxY && playerPosY > minY) {
           touchedItem = item.name;
-          item.x = canvasX - item.width;
+          if(this.notSpecialItem(item.name)) { item.x = canvasX - item.width; }
       }
 
       // draw item
@@ -67,8 +101,12 @@ class Items {
     }
     return touchedItem;
   }
+
+  notSpecialItem(itemName) {
+    return itemName !== "yBoost";
+  }
 }
 
 
 
-export { Items, xBoostItem, fullBounceItem, halfBounceItem };
+export { Items, xBoostItem, yBoostItem, fullBounceItem, halfBounceItem, fullEnergyItem, lastChanceItem };
