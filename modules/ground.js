@@ -2,7 +2,7 @@ class Ground {
   constructor(canvasWidth, y) {
     this.groundObjs = [0, canvasWidth, canvasWidth * 2];
     this.y = y;
-    this.heigth = 50;
+    this.heigth = 100;
     this.canvas = document.getElementById("gameWindow");
   }
 
@@ -15,11 +15,11 @@ class Ground {
     for(const gPos of this.groundObjs) {
       let hGameDistance = gPos*10/this.canvas.width;
       ctx.beginPath();
-      ctx.rect(gPos, this.canvas.height - 20, this.canvas.width, 50);
-      ctx.rect(gPos, this.canvas.height - 40, 10, 60);
+      ctx.rect(gPos, this.y, this.canvas.width, 100);
+      ctx.rect(gPos, this.y - 20, 10, 60);
       ctx.font = "20px Roboto";
       ctx.fillStyle = "#4A5899";
-      ctx.fillText(hGameDistance + "m", gPos, this.canvas.height - 50);
+      ctx.fillText(hGameDistance + "m", gPos, this.y - 40);
       ctx.fill();
       ctx.closePath();
     }

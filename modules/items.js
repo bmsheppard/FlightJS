@@ -49,7 +49,7 @@ class fullEnergyItem {
     this.y = y;
     this.width = 40;
     this.height = 40;
-    this.color = "#E39EC1";
+    this.color = "purple";
   }
 }
 
