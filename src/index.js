@@ -9,7 +9,6 @@ var canvas = document.getElementById("gameWindow");
 var ctx = canvas.getContext("2d");
 
 // constants
-//const PLAYER_START_Y = canvas.height - 30;
 const PLAYER_START_Y = canvas.height + 30;
 const PLAYER_START_X = canvas.width / 8;
 const HORIZONTAL_MARKERS_DISTANCE = canvas.width / 2;
@@ -36,22 +35,12 @@ function endGame() {
   document.getElementById("scoreMenu").style.display = "flex";
   document.getElementById("finalScore").innerText =
     document.getElementById("score").innerText;
+  document.getElementById("score").innerText = "Press spacebar to start!";
+
   gameStarted = false;
   items.items = [];
   ground.groundObjs = [0, canvas.width, canvas.width*2];
   background.resetClouds();
-
-  document.removeEventListener("keydown", function(e){
-    if(e.keyCode === 32) {
-      player.flap();
-      gameStarted = true;
-    } else if(e.keyCode === 27 || e.keyCode === 80) {
-      pauseGame();
-    } else if(e.keyCode === 65) { player.giveLastChance(); }
-    else if(e.keyCode === 83) { player.giveBoost(); } // xboost
-  },
-  true
-  );
 }
 
 function run() {
@@ -59,8 +48,8 @@ function run() {
   var canvasX = player.x - PLAYER_START_X;
   var canvasY = player.y - canvas.height / 2;
 
-  document.getElementById("score").innerText = parseInt(canvasX);
   if(gameStarted) {
+    document.getElementById("score").innerText = parseInt(canvasX);
     ctx.clearRect(canvasX, canvasY - canvas.height, canvas.width + 100, canvas.height*2);
 
     let p = getRandomInt(0, 100 + 500/player.vx);
