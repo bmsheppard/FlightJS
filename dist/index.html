@@ -3,13 +3,21 @@
   <head>
     <meta charset="utf-8" />
     <title>Flight</title>
-    <style>
-      * { padding: 0; margin: 50px auto}
-      canvas { background: #B8F3FF; display: block; margin: auto;}
-    </style>
+    <link rel="stylesheet" href="main.css">
+    <link href="https://fonts.cdnfonts.com/css/pusab" rel="stylesheet">
   </head>
   <body>
-    <canvas id="gameWindow" width=1080 height=480></canvas>
+    <div id="gameWrapper">
+      <canvas id="gameWindow" width=1080 height=480></canvas>
+      <p id="score">0</p>
+      <div id="scoreMenu">
+        <div class="finalScore">
+          <p>Final Score:</p>
+          <p id="finalScore">0</p>
+        <div>
+        <button id="replayButton">Play Again</button>
+      </div>
+    </div>
     <script src="./main.js"></script>
   </body>
 </html>

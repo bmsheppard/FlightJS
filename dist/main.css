@@ -1,0 +1,65 @@
+* {
+  font-family: 'Pusab', sans-serif;
+  margin: 50px auto;
+}
+
+canvas {
+  background: #B8F3FF;
+  display: block;
+  margin: auto;
+}
+
+button {
+  width: auto;
+  height: 50px;
+  padding: 10px;
+  background: #FF9505;
+  font-size: 40px;
+  text-align: center;
+  color: #4A5899;
+  border: 3px solid #F58F00;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+button:hover {
+  transform: scale(1.1);
+}
+
+#gameWrapper {
+  display: flex;
+  justify-content: center;
+}
+
+#score {
+  display: none;
+  position: absolute;
+  width: 1080px;
+  padding-left: 20px;
+  margin-top: 10px;
+}
+
+#scoreMenu {
+  position: absolute;
+  width: 1080px;
+  height: 480px;
+  top: 50px;
+  align-items: center;
+  display: none;
+  flex-direction: column;
+  background: #F7F4EA;
+}
+
+.finalScore {
+  font-size: 40px;
+  text-align: center;
+  color: #4A5899;
+}
+
+#gameMenu {
+  position: absolute;
+  width: 100%;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}

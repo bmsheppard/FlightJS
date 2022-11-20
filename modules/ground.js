@@ -13,13 +13,9 @@ class Ground {
       this.groundObjs.push(this.groundObjs[this.groundObjs.length - 1] + this.canvas.width);
     }
     for(const gPos of this.groundObjs) {
-      let hGameDistance = gPos*10/this.canvas.width;
       ctx.beginPath();
       ctx.rect(gPos, this.y, this.canvas.width, 100);
-      ctx.rect(gPos, this.y - 20, 10, 60);
-      ctx.font = "20px Roboto";
       ctx.fillStyle = "#4A5899";
-      ctx.fillText(hGameDistance + "m", gPos, this.y - 40);
       ctx.fill();
       ctx.closePath();
     }
