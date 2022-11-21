@@ -49,7 +49,7 @@ function run() {
   var canvasY = player.y - canvas.height / 2;
 
   if(gameStarted) {
-    document.getElementById("score").innerText = parseInt(canvasX);
+    document.getElementById("score").innerText = parseInt(canvasX / 10);
     ctx.clearRect(canvasX, canvasY - canvas.height, canvas.width + 100, canvas.height*2);
 
     let p = getRandomInt(0, 100 + 500/player.vx);
