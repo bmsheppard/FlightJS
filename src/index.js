@@ -3,6 +3,7 @@ import { Player } from "../modules/player.js";
 import { Ground } from "../modules/ground.js";
 import { Background } from "../modules/background.js";
 import { getRandomInt } from "../modules/helpers.js";
+import { gsap } from  "gsap";
 
 // canvas stuff
 var canvas = document.getElementById("gameWindow");
@@ -25,22 +26,31 @@ background.addCloud(getRandomInt(canvas.width/2, canvas.width), canvas.height, 0
 
 var groundObjPos = [0, canvas.width, canvas.width*2];
 var gameStarted = false;
+var gameEnding = false;
+var finalX = 0;
 
 function drawDebug(canvasX) {
   ground.addHorizontalMarkers(canvasX, HORIZONTAL_MARKERS_DISTANCE, player.y);
 }
 
 function endGame() {
-  player.reset(PLAYER_START_X, PLAYER_START_Y);
-  document.getElementById("scoreMenu").style.display = "flex";
+  //todo: disable spacebar presses
   document.getElementById("finalScore").innerText =
     document.getElementById("score").innerText;
   document.getElementById("score").innerText = "Press spacebar to start!";
+  document.getElementById("splash").style.display = "flex";
 
   gameStarted = false;
+  gameEnding = true;
   items.items = [];
-  ground.groundObjs = [0, canvas.width, canvas.width*2];
-  background.resetClouds();
+  gsap.fromTo("#splash",
+  {y: 20, opacity: 1, duration: 0, scale: 0},
+  {y: -20, opacity: 0, duration: 2, scale: 2,
+    onComplete: function() {
+      document.getElementById("scoreMenu").style.display = "flex";
+    }
+  });
+  return;
 }
 
 function run() {
@@ -70,19 +80,23 @@ function run() {
     } else if(p < 19) {
       items.items.push(new lastChanceItem(itemX, GROUND_POS_Y));
     }
-    ground.draw(canvasX);
     drawDebug(canvasX);
     let touchedItem = items.drawItems(canvasX, player.x, player.y);
     if(touchedItem !== "") {
       player.applyItem(touchedItem);
     }
     player.draw();
+    ground.draw(canvasX);
     player.y >= canvas.height / 2 ? background.draw(canvasX, player.vx, 0) : background.draw(canvasX, player.vx, player.vy);
     if(player.lost) {
+      finalX = canvasX;
       //ctx.clearRect(canvasX, canvasY - canvas.height, canvas.width + 100, canvas.height*2);
       endGame();
-      return;
     }
+  } else if(gameEnding) {
+    ctx.clearRect(finalX, 0, canvas.width + 100, canvas.height*2);
+    ground.draw(finalX);
+    background.draw(finalX, -1, 0);
   } else {
     ctx.clearRect(0, canvasY - canvas.height, canvas.width + 100, canvas.height*2);
     ground.draw(canvasX);
@@ -132,5 +146,8 @@ playButton.addEventListener("click", () => {
 
 replayButton.addEventListener("click", () => {
   document.getElementById("scoreMenu").style.display = "none";
-  run();
+  player.reset(PLAYER_START_X, PLAYER_START_Y);
+  ground.groundObjs = [0, canvas.width, canvas.width*2];
+  background.resetClouds();
+  gameEnding = false;
 });

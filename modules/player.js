@@ -196,7 +196,7 @@ class Player {
 
   shouldSkip() {
     // approx 30 degrees
-    console.log(this.vx, Math.atan(this.vy / this.vx));
+    // console.log(this.vx, Math.atan(this.vy / this.vx));
     return Math.atan(this.vy / this.vx) < 0.52 && this.vx > 10;
   }
 
