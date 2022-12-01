@@ -8,8 +8,8 @@ class Background {
 
   addCloud(canvasX, windowHeight, dy) {
     dy = Math.min(dy, 0);
-    let randomY = getRandomInt(dy, windowHeight - 300 + dy);
-    let cloud = new Cloud(canvasX, randomY, 300, 100);
+    let randomY = getRandomInt(dy, windowHeight - 600 + dy);
+    let cloud = new Cloud(canvasX, randomY, getRandomInt(300,400), getRandomInt(200,300));
     this.clouds.push(cloud);
   }
 
@@ -30,9 +30,7 @@ class Background {
       cloud.x = cloud.x + cameraSpeedX*0.8;
       cloud.y = cloud.y + cameraSpeedY*0.2;
       ctx.beginPath();
-      ctx.rect(cloud.x, cloud.y, cloud.width, cloud.height);
-      ctx.fillStyle = cloud.color;
-      ctx.fill();
+      ctx.drawImage(cloud.image, cloud.x, cloud.y, cloud.width, cloud.height);
       ctx.closePath();
     }
     ctx.restore();
@@ -53,6 +51,12 @@ class Cloud {
     this.width = width;
     this.height = height;
     this.color = "#F7F4EA";
+    this.image = new Image();
+    if(Math.random < 0.5) {
+      this.image.src = "../images/cloud1.png";
+    } else {
+      this.image.src = "../images/cloud2.png";
+    }
   }
 }
 

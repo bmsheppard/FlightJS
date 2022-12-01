@@ -6,6 +6,7 @@ class xBoostItem {
     this.width = 80;
     this.height = 20;
     this.color = "#8AC926";
+    this.image = new Image();
   }
 }
 
@@ -17,6 +18,7 @@ class yBoostItem {
     this.width = 40;
     this.height = 120;
     this.color = "#CDE7B0";
+    this.image = new Image();
   }
 }
 
@@ -25,9 +27,11 @@ class fullBounceItem {
     this.name = "fullBounce";
     this.x = x;
     this.y = y;
-    this.width = 40;
-    this.height = 40;
+    this.width = 45;
+    this.height = 45;
     this.color = "#FCF300";
+    this.image = new Image();
+    this.image.src = "../images/fullBounce.png";
   }
 }
 
@@ -36,9 +40,11 @@ class halfBounceItem {
     this.name = "halfBounce";
     this.x = x;
     this.y = y;
-    this.width = 40;
-    this.height = 40;
+    this.width = 45;
+    this.height = 45;
     this.color = "#F9627D";
+    this.image = new Image();
+    this.image.src = "../images/halfBounce.png";
   }
 }
 
@@ -50,6 +56,7 @@ class fullEnergyItem {
     this.width = 40;
     this.height = 40;
     this.color = "purple";
+    this.image = new Image();
   }
 }
 
@@ -57,10 +64,23 @@ class lastChanceItem {
   constructor(x, y) {
     this.name = "lastChance";
     this.x = x;
-    this.y = y - 40;
-    this.width = 80;
-    this.height = 40;
+    this.y = y - 20;
+    this.startY = this.y;
+    this.dir = 0;
+    this.width = 120;
+    this.height = 60;
     this.color = "#FFBA08";
+    this.image = new Image();
+    this.image.src = "../images/lifesaver.png";
+    this.moves = true;
+  }
+
+  shift() {
+    if(this.dir) {
+      this.y > this.startY + 5 ? this.dir = 0 : this.y += 0.2;
+    } else {
+      this.y < this.startY - 5 ? this.dir = 1 : this.y -= 0.2;
+    }
   }
 }
 
@@ -94,10 +114,12 @@ class Items {
 
       // draw item
       ctx.beginPath();
-      ctx.rect(item.x, item.y, item.width, item.height);
-      ctx.fillStyle = item.color;
-      ctx.fill();
+      ctx.drawImage(item.image, item.x, item.y, item.width, item.height);
       ctx.closePath();
+
+      if(item.moves) {
+        item.shift();
+      }
     }
     return touchedItem;
   }

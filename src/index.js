@@ -47,7 +47,7 @@ function endGame() {
   {y: 20, opacity: 1, duration: 0, scale: 0},
   {y: -20, opacity: 0, duration: 2, scale: 2,
     onComplete: function() {
-      document.getElementById("scoreMenu").style.display = "flex";
+      //document.getElementById("scoreMenu").style.display = "flex";
     }
   });
   return;
@@ -81,12 +81,14 @@ function run() {
       items.items.push(new lastChanceItem(itemX, GROUND_POS_Y));
     }
     drawDebug(canvasX);
+
+    player.draw();
+    ground.draw(canvasX);
+    
     let touchedItem = items.drawItems(canvasX, player.x, player.y);
     if(touchedItem !== "") {
       player.applyItem(touchedItem);
     }
-    player.draw();
-    ground.draw(canvasX);
     player.y >= canvas.height / 2 ? background.draw(canvasX, player.vx, 0) : background.draw(canvasX, player.vx, player.vy);
     if(player.lost) {
       finalX = canvasX;
@@ -95,13 +97,13 @@ function run() {
     }
   } else if(gameEnding) {
     ctx.clearRect(finalX, 0, canvas.width + 100, canvas.height*2);
-    ground.draw(finalX);
     background.draw(finalX, -1, 0);
+    ground.draw(finalX);
   } else {
     ctx.clearRect(0, canvasY - canvas.height, canvas.width + 100, canvas.height*2);
+    background.draw(canvasX, -1, 0);
     ground.draw(canvasX);
     player.draw(true);
-    background.draw(canvasX, -1, 0);
   }
   requestAnimationFrame(run);
 }

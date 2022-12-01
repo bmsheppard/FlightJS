@@ -38,7 +38,7 @@ class Player {
     this.bounceType = 0;
     this.color = "#FF9505";
 
-    fish.src = '../images/Fish.png';
+    fish.src = '../images/fish.png';
     wing.src = '../images/Wing.png';
     this.flapAngle = 0;
     this.flapDir = 0; // 0: Down, 1: Up
@@ -217,7 +217,7 @@ class Player {
       return
     }
     if(this.energyX >= ENERGY_PER_FLAP) {
-      this.energyX = Math.max(this.energyX - ENERGY_PER_FLAP, 0);
+      //this.energyX = Math.max(this.energyX - ENERGY_PER_FLAP, 0);
       this.vy = Math.max(this.vy - 15, -20);
       this.vx = Math.min(this.vx + 3, MAX_VELOCITY_X);
     }
