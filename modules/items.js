@@ -4,9 +4,10 @@ class xBoostItem {
     this.x = x;
     this.y = y;
     this.width = 80;
-    this.height = 20;
+    this.height = 40;
     this.color = "#8AC926";
     this.image = new Image();
+    this.image.src = "../images/xboost.png";
   }
 }
 
@@ -15,10 +16,37 @@ class yBoostItem {
     this.name = "yBoost";
     this.x = x;
     this.y = y - 100;
-    this.width = 40;
-    this.height = 120;
+    this.startY = this.y;
+    this.dir = 0;
+    this.width = 60;
+    this.height = 135;
     this.color = "#CDE7B0";
     this.image = new Image();
+    this.image.src = "../images/propeller0.png";
+    this.moves = true;
+    this.frame = 4;
+    this.delay = 6;
+    this.curDely = this.delay;
+  }
+
+  shift() {
+    if(this.dir) {
+      this.y > this.startY + 3 ? this.dir = 0 : this.y += 0.2;
+    } else {
+      this.y < this.startY - 3 ? this.dir = 1 : this.y -= 0.2;
+    }
+
+    if(this.curDelay > 0) {
+      this.curDelay -= 1;
+      return;
+    }
+    this.curDelay = this.delay;
+    if(this.frame === 0) {
+      this.frame = 4;
+    } else {
+      this.frame -= 1;
+    }
+    this.image.src = `../images/propeller${this.frame}.png`;
   }
 }
 
@@ -53,10 +81,11 @@ class fullEnergyItem {
     this.name = "fullEnergy";
     this.x = x;
     this.y = y;
-    this.width = 40;
-    this.height = 40;
+    this.width = 69;
+    this.height = 69;
     this.color = "purple";
     this.image = new Image();
+    this.image.src = "../images/energy.png";
   }
 }
 

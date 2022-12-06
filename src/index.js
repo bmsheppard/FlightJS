@@ -47,7 +47,7 @@ function endGame() {
   {y: 20, opacity: 1, duration: 0, scale: 0},
   {y: -20, opacity: 0, duration: 2, scale: 2,
     onComplete: function() {
-      //document.getElementById("scoreMenu").style.display = "flex";
+      document.getElementById("scoreMenu").style.display = "flex";
     }
   });
   return;
@@ -75,16 +75,16 @@ function run() {
       items.items.push(new halfBounceItem(itemX, itemY));
     } else if(p < 8) {
       items.items.push(new fullEnergyItem(itemX, itemY));
-    } else if(p < 18) {
+    } else if(p < 11) {
       items.items.push(new yBoostItem(itemX, itemY));
-    } else if(p < 19) {
+    } else if(p < 12) {
       items.items.push(new lastChanceItem(itemX, GROUND_POS_Y));
     }
     drawDebug(canvasX);
 
     player.draw();
     ground.draw(canvasX);
-    
+
     let touchedItem = items.drawItems(canvasX, player.x, player.y);
     if(touchedItem !== "") {
       player.applyItem(touchedItem);
@@ -92,7 +92,7 @@ function run() {
     player.y >= canvas.height / 2 ? background.draw(canvasX, player.vx, 0) : background.draw(canvasX, player.vx, player.vy);
     if(player.lost) {
       finalX = canvasX;
-      //ctx.clearRect(canvasX, canvasY - canvas.height, canvas.width + 100, canvas.height*2);
+      ctx.clearRect(canvasX, canvasY - canvas.height, canvas.width + 100, canvas.height*2);
       endGame();
     }
   } else if(gameEnding) {
@@ -131,7 +131,7 @@ let replayButton = document.getElementById("replayButton");
 
 playButton.addEventListener("click", () => {
   document.addEventListener("keydown", function(e){
-    if(e.keyCode === 32) {
+    if(e.keyCode === 32 && !gameEnding) {
       player.flap();
       gameStarted = true;
     } else if(e.keyCode === 27 || e.keyCode === 80) {
