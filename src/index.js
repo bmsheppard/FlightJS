@@ -111,8 +111,9 @@ function run() {
 function showMenu() {
   let menu = `
     <div id="gameMenu">
-      <button id="playButton">Play</button>
-      <button id="instructionButton">How to Play</button>
+        <button id="playButton">Play</button>
+        <button id="instructionButton">How to Play</button>
+        <img src="../images/cloud1.png" height=900px>
     </div>
   `;
   document.getElementById("score").style.display = "none";
@@ -128,6 +129,7 @@ if(showMenu) {
 let playButton = document.getElementById("playButton");
 let instructionButton = document.getElementById("instructionButton");
 let replayButton = document.getElementById("replayButton");
+let menuButton = document.getElementById("menuButton");
 
 playButton.addEventListener("click", () => {
   document.addEventListener("keydown", function(e){
@@ -144,7 +146,15 @@ playButton.addEventListener("click", () => {
   document.getElementById("gameMenu").outerHTML="";
 });
 
-// todo: add instruction page
+instructionButton.addEventListener("click", () => {
+  document.getElementById("gameInstructions").style.display = "flex";
+  document.getElementById("gameMenu").style.display = "none";
+});
+
+menuButton.addEventListener("click", () => {
+  document.getElementById("gameInstructions").style.display = "none";
+  document.getElementById("gameMenu").style.display = "flex";
+});
 
 replayButton.addEventListener("click", () => {
   document.getElementById("scoreMenu").style.display = "none";
