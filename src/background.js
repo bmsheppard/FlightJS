@@ -53,9 +53,9 @@ class Cloud {
     this.color = "#F7F4EA";
     this.image = new Image();
     if(Math.random < 0.5) {
-      this.image.src = "../images/cloud1.png";
+      this.image.src = "./images/cloud1.png";
     } else {
-      this.image.src = "../images/cloud2.png";
+      this.image.src = "./images/cloud2.png";
     }
   }
 }

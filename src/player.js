@@ -38,8 +38,8 @@ class Player {
     this.bounceType = 0;
     this.color = "#FF9505";
 
-    fish.src = '../images/fish.png';
-    wing.src = '../images/Wing.png';
+    fish.src = './images/fish.png';
+    wing.src = './images/Wing.png';
     this.flapAngle = 0;
     this.flapDir = 0; // 0: Down, 1: Up
 

@@ -7,7 +7,7 @@ class xBoostItem {
     this.height = 40;
     this.color = "#8AC926";
     this.image = new Image();
-    this.image.src = "../images/xboost.png";
+    this.image.src = "./images/xboost.png";
   }
 }
 
@@ -22,7 +22,7 @@ class yBoostItem {
     this.height = 135;
     this.color = "#CDE7B0";
     this.image = new Image();
-    this.image.src = "../images/propeller0.png";
+    this.image.src = "./images/propeller0.png";
     this.moves = true;
     this.frame = 4;
     this.delay = 6;
@@ -46,7 +46,7 @@ class yBoostItem {
     } else {
       this.frame -= 1;
     }
-    this.image.src = `../images/propeller${this.frame}.png`;
+    this.image.src = `./images/propeller${this.frame}.png`;
   }
 }
 
@@ -59,7 +59,7 @@ class fullBounceItem {
     this.height = 45;
     this.color = "#FCF300";
     this.image = new Image();
-    this.image.src = "../images/fullBounce.png";
+    this.image.src = "./images/fullBounce.png";
   }
 }
 
@@ -72,7 +72,7 @@ class halfBounceItem {
     this.height = 45;
     this.color = "#F9627D";
     this.image = new Image();
-    this.image.src = "../images/halfBounce.png";
+    this.image.src = "./images/halfBounce.png";
   }
 }
 
@@ -85,7 +85,7 @@ class fullEnergyItem {
     this.height = 69;
     this.color = "purple";
     this.image = new Image();
-    this.image.src = "../images/energy.png";
+    this.image.src = "./images/energy.png";
   }
 }
 
@@ -100,7 +100,7 @@ class lastChanceItem {
     this.height = 60;
     this.color = "#FFBA08";
     this.image = new Image();
-    this.image.src = "../images/lifesaver.png";
+    this.image.src = "./images/lifesaver.png";
     this.moves = true;
   }
 

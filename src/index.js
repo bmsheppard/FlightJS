@@ -1,9 +1,26 @@
-import { Items, xBoostItem, yBoostItem, fullBounceItem, halfBounceItem, fullEnergyItem, lastChanceItem } from "../modules/items.js";
-import { Player } from "../modules/player.js";
-import { Ground } from "../modules/ground.js";
-import { Background } from "../modules/background.js";
-import { getRandomInt } from "../modules/helpers.js";
+import { Items, xBoostItem, yBoostItem, fullBounceItem, halfBounceItem, fullEnergyItem, lastChanceItem } from "./items.js";
+import { Player } from "./player.js";
+import { Ground } from "./ground.js";
+import { Background } from "./background.js";
+import { getRandomInt } from "./helpers.js";
 import { gsap } from  "gsap";
+import c1 from "../images/cloud1.png";
+import c2 from "../images/cloud2.png";
+import e from "../images/energy.png";
+import fish from "../images/fish.png";
+import fullBounce from "../images/fullBounce.png";
+import halfBounce from "../images/halfBounce.png";
+import lifesaver from "../images/lifesaver.png";
+import propeller0 from "../images/propeller0.png";
+import propeller1 from "../images/propeller1.png";
+import propeller2 from "../images/propeller2.png";
+import propeller3 from "../images/propeller3.png";
+import propeller4 from "../images/propeller4.png";
+import wave1 from "../images/wave1.png";
+import wave2 from "../images/wave2.png";
+import wave3 from "../images/wave3.png";
+import wing from "../images/Wing.png";
+import xboost from "../images/xboost.png";
 
 // canvas stuff
 var canvas = document.getElementById("gameWindow");
@@ -113,7 +130,7 @@ function showMenu() {
     <div id="gameMenu">
         <button id="playButton">Play</button>
         <button id="instructionButton">How to Play</button>
-        <img src="../images/cloud1.png" height=900px>
+        <img src="./images/cloud1.png" height=900px>
     </div>
   `;
   document.getElementById("score").style.display = "none";

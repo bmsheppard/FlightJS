@@ -32,21 +32,21 @@ class Ground {
     }
     for(const gPos of this.groundObjs) {
       ctx.beginPath();
-      this.wave1.src = '../images/wave3.png';
+      this.wave1.src = './images/wave3.png';
       if(this.w1Dir) {
         this.w1Height > MAX_WAVE_HEIGHT - this.w1Offset ? this.w1Dir = 0 : this.w1Height += 0.05;
       } else {
         this.w1Height < MIN_WAVE_HEIGHT - this.w1Offset ? this.w1Dir = 1 : this.w1Height -= 0.05;
       }
 
-      this.wave2.src = '../images/wave2.png';
+      this.wave2.src = './images/wave2.png';
       if(this.w2Dir) {
         this.w2Height > MAX_WAVE_HEIGHT - this.w2Offset ? this.w2Dir = 0 : this.w2Height += 0.03;
       } else {
         this.w2Height < MIN_WAVE_HEIGHT - this.w2Offset ? this.w2Dir = 1 : this.w2Height -= 0.03;
       }
 
-      this.wave3.src = '../images/wave1.png';
+      this.wave3.src = './images/wave1.png';
       if(this.w3Dir) {
         this.w3Height > MAX_WAVE_HEIGHT - this.w3Offset? this.w3Dir = 0 : this.w3Height += 0.05;
       } else {
