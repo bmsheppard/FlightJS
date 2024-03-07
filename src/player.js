@@ -199,17 +199,6 @@ class Player {
     return Math.atan(this.vy / this.vx) < 0.52 && this.vx > 10;
   }
 
-  reset(x, y) {
-    this.x = x;
-    this.vx = 0;
-    this.ax = 0;
-    this.y = y;
-    this.vy = 0;
-    this.ay = 0;
-    this.lost = false;
-    this.energyX = ENERGY_X_POS;
-  }
-
   flap() {
     if(this.vx === 0 && this.vy === 0) {
       this.startGame();

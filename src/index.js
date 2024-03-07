@@ -42,10 +42,7 @@ function drawDebug(canvasX) {
 }
 
 function endGame() {
-  //todo: disable spacebar presses
-  document.getElementById("finalScore").innerText =
-    document.getElementById("score").innerText;
-  document.getElementById("score").innerText = "Press spacebar to start!";
+  document.getElementById("finalScore").innerText = document.getElementById("score").innerText;
   document.getElementById("splash").style.display = "absolute";
 
   gameStarted = false;
@@ -53,8 +50,10 @@ function endGame() {
   items.items = [];
   gsap.fromTo("#splash",
   {y: 20, opacity: 1, duration: 0, scale: 0},
-  {y: -20, opacity: 0, duration: 2, scale: 2,
+  {y: -20, opacity: 0, duration: 1.5, scale: 2,
     onComplete: function() {
+      document.body.style.background = "#F7F4EA";
+      document.getElementById("score").innerText = "Press spacebar or tap to start!";
       document.getElementById("scoreMenu").style.display = "flex";
     }
   });
@@ -125,7 +124,7 @@ function showMenu() {
     <div id="gameMenu">
         <button id="playButton">Play</button>
         <button id="instructionButton">How to Play</button>
-        <img src="./images/cloud1.png" height=900px>
+        <img src="./images/cloud1.png" height=100% />
     </div>
   `;
   document.getElementById("score").style.display = "none";
@@ -166,16 +165,19 @@ playButton.addEventListener("click", () => {
 instructionButton.addEventListener("click", () => {
   document.getElementById("gameInstructions").style.display = "flex";
   document.getElementById("gameMenu").style.display = "none";
+  document.body.style.background = "#F7F4EA";
 });
 
 menuButton.addEventListener("click", () => {
   document.getElementById("gameInstructions").style.display = "none";
   document.getElementById("gameMenu").style.display = "flex";
+  document.body.style.background = "#B8F3FF";
 });
 
 replayButton.addEventListener("click", () => {
+  document.body.style.background = "#B8F3FF";
   document.getElementById("scoreMenu").style.display = "none";
-  player.reset(PLAYER_START_X, PLAYER_START_Y);
+  player = new Player(PLAYER_START_X, PLAYER_START_Y, GROUND_POS_Y);
   ground.groundObjs = [0, canvas.width, canvas.width*2];
   background.resetClouds();
   gameEnding = false;

@@ -8,7 +8,8 @@ body {
   margin: 0;
   display: flex;
   justify-content: center;
-  background: #5061a5;
+  font-size: 20px;
+  background: #B8F3FF;
 }
 
 canvas {
@@ -20,7 +21,6 @@ canvas {
 button {
   width: auto;
   height: 50px;
-  padding: 10px;
   background: #FF9505;
   font-size: 40px;
   text-align: center;
@@ -30,7 +30,8 @@ button {
   line-height: 0px;
   cursor: pointer;
   z-index: 10;
-  margin: 50px;
+  margin: 30px;
+  padding: 25px;
 }
 
 button:hover {
@@ -43,6 +44,7 @@ button:hover {
 }
 
 #score {
+  font-size: 30px;
   display: none;
   position: absolute;
   width: calc(100% - 20px);
@@ -71,16 +73,15 @@ button:hover {
 #gameMenu {
   position: absolute;
   width: 100%;
+  height: 100%;
   align-items: center;
+  justify-content: center;
   display: flex;
   flex-direction: column;
-  margin-top: 55px;
 }
 
 #gameMenu img {
   position: absolute;
-  top: -300px;
-  opacity: 80%;
 }
 
 #gameInstructions {
@@ -90,7 +91,17 @@ button:hover {
   display: none;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   background: #F7F4EA;
+  text-align: center;
+}
+#gameInstructions p {
+  padding: 0 30px 0 30px;
+}
+
+#menuButton {
+  position: absolute;
+  bottom: 0;
 }
 
 .itemWrapper {
@@ -112,6 +123,7 @@ button:hover {
   display: flex;
   flex-direction: column;
   align-items: center;
+  text-align: center;
   margin-right: 50px;
 }
 

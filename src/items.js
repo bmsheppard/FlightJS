@@ -25,7 +25,7 @@ class yBoostItem {
     this.image.src = "./images/propeller0.png";
     this.moves = true;
     this.frame = 4;
-    this.delay = 6;
+    this.delay = 8;
     this.curDely = this.delay;
   }
 
