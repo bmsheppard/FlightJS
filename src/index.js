@@ -144,15 +144,20 @@ let replayButton = document.getElementById("replayButton");
 let menuButton = document.getElementById("menuButton");
 
 playButton.addEventListener("click", () => {
-  document.addEventListener("keydown", function(e){
-    if(e.keyCode === 32 && !gameEnding) {
+  document.addEventListener("keydown", function(e) {
+    if(e.key === " " && !gameEnding) {
       player.flap();
       gameStarted = true;
-    } else if(e.keyCode === 27 || e.keyCode === 80) {
+    } else if(e.key === "Escape" || e.key === "p") {
       pauseGame();
-    } else if(e.keyCode === 65) { player.giveLastChance(); }
-    else if(e.keyCode === 83) { player.giveBoost(); } // xboost
+    } else if(e.key === "s") { player.giveBoost(); } // xboost
   });
+  document.addEventListener('touchstart', function() {
+    if (!gameEnding) { 
+      player.flap();
+      gameStarted = true;
+    }
+  }, false);
   run();
   document.getElementById("score").style.display = "flex";
   document.getElementById("gameMenu").outerHTML="";
