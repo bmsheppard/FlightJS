@@ -46,7 +46,7 @@ function endGame() {
   document.getElementById("finalScore").innerText =
     document.getElementById("score").innerText;
   document.getElementById("score").innerText = "Press spacebar to start!";
-  document.getElementById("splash").style.display = "flex";
+  document.getElementById("splash").style.display = "absolute";
 
   gameStarted = false;
   gameEnding = true;

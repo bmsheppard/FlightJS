@@ -1,4 +1,3 @@
-import { createArrow } from "./helpers.js";
 const ENERGY_Y_POS = 20;
 const ENERGY_X_POS = 196;
 const ENERGY_PER_FLAP = 25;

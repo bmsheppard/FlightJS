@@ -10,7 +10,7 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "webpack": "^5.38.1",
+    "webpack": "^5.90.3",
     "webpack-cli": "^4.7.2"
   },
   "dependencies": {
