@@ -4,27 +4,13 @@ import { Ground } from "./ground.js";
 import { Background } from "./background.js";
 import { getRandomInt } from "./helpers.js";
 import { gsap } from  "gsap";
-import c1 from "./images/cloud1.png";
-import c2 from "./images/cloud2.png";
-import e from "./images/energy.png";
-import fish from "./images/fish.png";
-import fullBounce from "./images/fullBounce.png";
-import halfBounce from "./images/halfBounce.png";
-import lifesaver from "./images/lifesaver.png";
-import propeller0 from "./images/propeller0.png";
-import propeller1 from "./images/propeller1.png";
-import propeller2 from "./images/propeller2.png";
-import propeller3 from "./images/propeller3.png";
-import propeller4 from "./images/propeller4.png";
-import wave1 from "./images/wave1.png";
-import wave2 from "./images/wave2.png";
-import wave3 from "./images/wave3.png";
-import wing from "./images/Wing.png";
-import xboost from "./images/xboost.png";
 
 // canvas stuff
 var canvas = document.getElementById("gameWindow");
 var ctx = canvas.getContext("2d");
+
+ctx.canvas.width  = window.innerWidth;
+ctx.canvas.height = window.innerHeight;
 
 // constants
 const PLAYER_START_Y = canvas.height + 30;
@@ -41,10 +27,15 @@ var background = new Background();
 background.addCloud(getRandomInt(0, canvas.width/4), canvas.height, 0);
 background.addCloud(getRandomInt(canvas.width/2, canvas.width), canvas.height, 0);
 
-var groundObjPos = [0, canvas.width, canvas.width*2];
 var gameStarted = false;
 var gameEnding = false;
 var finalX = 0;
+
+// framerate
+const fps = 60;
+const fpsInterval = 1000 / fps;
+var then = Date.now();
+var now = then;
 
 function drawDebug(canvasX) {
   ground.addHorizontalMarkers(canvasX, HORIZONTAL_MARKERS_DISTANCE, player.y);
@@ -74,54 +65,58 @@ function run() {
   // current camera positions
   var canvasX = player.x - PLAYER_START_X;
   var canvasY = player.y - canvas.height / 2;
-
-  if(gameStarted) {
-    document.getElementById("score").innerText = parseInt(canvasX / 10);
-    ctx.clearRect(canvasX, canvasY - canvas.height, canvas.width + 100, canvas.height*2);
-
-    let p = getRandomInt(0, 100 + 500/player.vx);
-    let itemX = canvasX + canvas.width;
-    let itemMaxY = Math.max(canvasY - canvas.height*2, MAX_ITEM_HEIGHT_Y);
-    let itemMinY = Math.min(canvasY + canvas.height*2, GROUND_POS_Y - 100);
-    let itemY = getRandomInt(itemMinY, itemMaxY);
-    if(p < 3) {
-      items.items.push(new xBoostItem(itemX, itemY));
-    } else if(p < 4) {
-      items.items.push(new fullBounceItem(itemX, itemY));
-    } else if(p < 6) {
-      items.items.push(new halfBounceItem(itemX, itemY));
-    } else if(p < 8) {
-      items.items.push(new fullEnergyItem(itemX, itemY));
-    } else if(p < 11) {
-      items.items.push(new yBoostItem(itemX, itemY));
-    } else if(p < 12) {
-      items.items.push(new lastChanceItem(itemX, GROUND_POS_Y));
-    }
-    drawDebug(canvasX);
-
-    player.draw();
-    ground.draw(canvasX);
-
-    let touchedItem = items.drawItems(canvasX, player.x, player.y);
-    if(touchedItem !== "") {
-      player.applyItem(touchedItem);
-    }
-    player.y >= canvas.height / 2 ? background.draw(canvasX, player.vx, 0) : background.draw(canvasX, player.vx, player.vy);
-    if(player.lost) {
-      finalX = canvasX;
+  let elapsed = now - then;
+  if (elapsed > fpsInterval) { 
+    then = now - (elapsed % fpsInterval);
+    if(gameStarted) {
+      document.getElementById("score").innerText = parseInt(canvasX / 10);
       ctx.clearRect(canvasX, canvasY - canvas.height, canvas.width + 100, canvas.height*2);
-      endGame();
+
+      let p = getRandomInt(0, 100 + 500/player.vx);
+      let itemX = canvasX + canvas.width;
+      let itemMaxY = Math.max(canvasY - canvas.height*2, MAX_ITEM_HEIGHT_Y);
+      let itemMinY = Math.min(canvasY + canvas.height*2, GROUND_POS_Y - 100);
+      let itemY = getRandomInt(itemMinY, itemMaxY);
+      if(p < 3) {
+        items.items.push(new xBoostItem(itemX, itemY));
+      } else if(p < 4) {
+        items.items.push(new fullBounceItem(itemX, itemY));
+      } else if(p < 6) {
+        items.items.push(new halfBounceItem(itemX, itemY));
+      } else if(p < 8) {
+        items.items.push(new fullEnergyItem(itemX, itemY));
+      } else if(p < 11) {
+        items.items.push(new yBoostItem(itemX, itemY));
+      } else if(p < 12) {
+        items.items.push(new lastChanceItem(itemX, GROUND_POS_Y));
+      }
+      drawDebug(canvasX);
+
+      player.draw();
+      ground.draw(canvasX);
+
+      let touchedItem = items.drawItems(canvasX, player.x, player.y);
+      if(touchedItem !== "") {
+        player.applyItem(touchedItem);
+      }
+      player.y >= canvas.height / 2 ? background.draw(canvasX, player.vx, 0) : background.draw(canvasX, player.vx, player.vy);
+      if(player.lost) {
+        finalX = canvasX;
+        ctx.clearRect(canvasX, canvasY - canvas.height, canvas.width + 100, canvas.height*2);
+        endGame();
+      }
+    } else if(gameEnding) {
+      ctx.clearRect(finalX, 0, canvas.width + 100, canvas.height*2);
+      background.draw(finalX, -1, 0);
+      ground.draw(finalX);
+    } else {
+      ctx.clearRect(0, canvasY - canvas.height, canvas.width + 100, canvas.height*2);
+      background.draw(canvasX, -1, 0);
+      ground.draw(canvasX);
+      player.draw(true);
     }
-  } else if(gameEnding) {
-    ctx.clearRect(finalX, 0, canvas.width + 100, canvas.height*2);
-    background.draw(finalX, -1, 0);
-    ground.draw(finalX);
-  } else {
-    ctx.clearRect(0, canvasY - canvas.height, canvas.width + 100, canvas.height*2);
-    background.draw(canvasX, -1, 0);
-    ground.draw(canvasX);
-    player.draw(true);
   }
+  now = Date.now();
   requestAnimationFrame(run);
 }
 
