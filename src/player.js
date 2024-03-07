@@ -1,5 +1,6 @@
 const ENERGY_Y_POS = 20;
 const ENERGY_X_POS = 196;
+const ENERGY_X_OFFSET = 10;
 const ENERGY_PER_FLAP = 25;
 const MAX_VELOCITY_X = 35;
 const FISH_WIDTH = 72;
@@ -14,6 +15,7 @@ class Player {
     // player attributes
     this.size = 40;
     this.x = x;
+    this.startX = x;
     this.vx = 0;
     this.ax = 0;
     this.y = y;
@@ -61,8 +63,6 @@ class Player {
       ctx.drawImage(wing, this.x - WING_WIDTH/2, this.y + 6, WING_WIDTH, WING_HEIGHT);
 
       ctx.closePath();
-      let arrowStartX = this.x;
-      let arrowStartY = canvas.height - 10 - this.size;
       if(this.dir === 'shrink') {
         this.arrowEndY += 1;
         this.arrowEndX -= 1;
@@ -162,7 +162,7 @@ class Player {
     var ctx = canvas.getContext("2d");
     ctx.beginPath();
     ctx.rect(
-      this.x + canvas.width - 350,
+      this.x - this.startX + canvas.width - ENERGY_X_OFFSET - 200, // 200 is the width
       this.energyY,
       200,
       20
@@ -173,7 +173,7 @@ class Player {
 
     ctx.beginPath();
     ctx.rect(
-      this.x + canvas.width - 348,
+      this.x - this.startX - 198 + canvas.width - ENERGY_X_OFFSET, // the '2' here simulates a border 
       this.energyY + 2,
       this.energyX,
       16
@@ -183,7 +183,7 @@ class Player {
     ctx.closePath();
     ctx.beginPath();
     ctx.rect(
-      this.x + canvas.width - 348 + ENERGY_PER_FLAP,
+      this.x - this.startX - 198 + canvas.width - ENERGY_X_OFFSET + ENERGY_PER_FLAP, // the '2' here simulates a border
       this.energyY - 2,
       2,
       20
